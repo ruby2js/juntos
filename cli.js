@@ -212,9 +212,15 @@ async function initProject(destination, options = {}) {
     existing.devDependencies = existing.devDependencies || {};
     existing.scripts = existing.scripts || {};
 
-    // Add dependencies if missing
+    // Add dependencies if missing (ruby2js and vite-plugin-ruby2js are peer deps of ruby2js-rails)
+    if (!existing.dependencies['ruby2js']) {
+      existing.dependencies['ruby2js'] = `${RELEASES_URL}/ruby2js-beta.tgz`;
+    }
     if (!existing.dependencies['ruby2js-rails']) {
       existing.dependencies['ruby2js-rails'] = `${RELEASES_URL}/ruby2js-rails-beta.tgz`;
+    }
+    if (!existing.dependencies['vite-plugin-ruby2js']) {
+      existing.dependencies['vite-plugin-ruby2js'] = `${RELEASES_URL}/vite-plugin-ruby2js-beta.tgz`;
     }
     if (!existing.devDependencies['vite']) {
       existing.devDependencies['vite'] = '^6.0.0';
@@ -243,7 +249,9 @@ async function initProject(destination, options = {}) {
         test: 'vitest run'
       },
       dependencies: {
-        'ruby2js-rails': `${RELEASES_URL}/ruby2js-rails-beta.tgz`
+        'ruby2js': `${RELEASES_URL}/ruby2js-beta.tgz`,
+        'ruby2js-rails': `${RELEASES_URL}/ruby2js-rails-beta.tgz`,
+        'vite-plugin-ruby2js': `${RELEASES_URL}/vite-plugin-ruby2js-beta.tgz`
       },
       devDependencies: {
         vite: '^6.0.0',
