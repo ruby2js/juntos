@@ -138,6 +138,10 @@ async function installDemo(demoName, destination, options = {}) {
     process.exit(1);
   }
 
+  // Initialize Juntos config files (package.json, vite.config.js, etc.)
+  console.log('Initializing Juntos...');
+  await initProject(destDir, { skipInstall: true, quiet: true });
+
   const relativeDest = destDir === cwd ? '.' : basename(destDir);
 
   // Run npm install unless --no-install was specified
@@ -186,19 +190,22 @@ For more information: https://www.ruby2js.com/docs/juntos
 
 async function initProject(destination, options = {}) {
   const cwd = process.cwd();
-  const destDir = destination ? join(cwd, destination) : cwd;
+  // Handle both absolute paths and relative paths
+  const destDir = destination && destination.startsWith('/') ? destination : (destination ? join(cwd, destination) : cwd);
 
   // Create directory if needed
   if (destination && !existsSync(destDir)) {
     mkdirSync(destDir, { recursive: true });
   }
 
-  console.log(`Initializing Juntos in ${destDir === cwd ? '.' : basename(destDir)}/\n`);
+  if (!options.quiet) {
+    console.log(`Initializing Juntos in ${destDir === cwd ? '.' : basename(destDir)}/\n`);
+  }
 
   // Create or merge package.json
   const packagePath = join(destDir, 'package.json');
   if (existsSync(packagePath)) {
-    console.log('  Updating package.json...');
+    if (!options.quiet) console.log('  Updating package.json...');
     const existing = JSON.parse(readFileSync(packagePath, 'utf8'));
     existing.type = existing.type || 'module';
     existing.dependencies = existing.dependencies || {};
@@ -224,7 +231,7 @@ async function initProject(destination, options = {}) {
 
     writeFileSync(packagePath, JSON.stringify(existing, null, 2) + '\n');
   } else {
-    console.log('  Creating package.json...');
+    if (!options.quiet) console.log('  Creating package.json...');
     const appName = basename(destDir).toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const pkg = {
       name: appName,
@@ -249,7 +256,7 @@ async function initProject(destination, options = {}) {
   // Create vite.config.js
   const viteConfigPath = join(destDir, 'vite.config.js');
   if (!existsSync(viteConfigPath)) {
-    console.log('  Creating vite.config.js...');
+    if (!options.quiet) console.log('  Creating vite.config.js...');
     writeFileSync(viteConfigPath, `import { defineConfig } from 'vite';
 import { juntos } from 'ruby2js-rails/vite';
 
@@ -258,13 +265,13 @@ export default defineConfig({
 });
 `);
   } else {
-    console.log('  Skipping vite.config.js (already exists)');
+    if (!options.quiet) console.log('  Skipping vite.config.js (already exists)');
   }
 
   // Create vitest.config.js
   const vitestConfigPath = join(destDir, 'vitest.config.js');
   if (!existsSync(vitestConfigPath)) {
-    console.log('  Creating vitest.config.js...');
+    if (!options.quiet) console.log('  Creating vitest.config.js...');
     writeFileSync(vitestConfigPath, `import { defineConfig, mergeConfig } from 'vitest/config';
 import viteConfig from './vite.config.js';
 
@@ -278,14 +285,14 @@ export default mergeConfig(viteConfig, defineConfig({
 }));
 `);
   } else {
-    console.log('  Skipping vitest.config.js (already exists)');
+    if (!options.quiet) console.log('  Skipping vitest.config.js (already exists)');
   }
 
   // Create test/setup.mjs
   const testDir = join(destDir, 'test');
   const setupPath = join(testDir, 'setup.mjs');
   if (!existsSync(setupPath)) {
-    console.log('  Creating test/setup.mjs...');
+    if (!options.quiet) console.log('  Creating test/setup.mjs...');
     if (!existsSync(testDir)) {
       mkdirSync(testDir, { recursive: true });
     }
@@ -314,14 +321,14 @@ beforeEach(async () => {
 });
 `);
   } else {
-    console.log('  Skipping test/setup.mjs (already exists)');
+    if (!options.quiet) console.log('  Skipping test/setup.mjs (already exists)');
   }
 
   // Create bin/juntos binstub
   const binDir = join(destDir, 'bin');
   const binstubPath = join(binDir, 'juntos');
   if (!existsSync(binstubPath)) {
-    console.log('  Creating bin/juntos...');
+    if (!options.quiet) console.log('  Creating bin/juntos...');
     if (!existsSync(binDir)) {
       mkdirSync(binDir, { recursive: true });
     }
@@ -332,7 +339,12 @@ exec npx juntos "$@"
 `);
     chmodSync(binstubPath, 0o755);
   } else {
-    console.log('  Skipping bin/juntos (already exists)');
+    if (!options.quiet) console.log('  Skipping bin/juntos (already exists)');
+  }
+
+  // In quiet mode, we're done - skip npm install and messages
+  if (options.quiet) {
+    return;
   }
 
   const relativeDest = destDir === cwd ? '.' : basename(destDir);
