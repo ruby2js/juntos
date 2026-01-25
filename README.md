@@ -47,6 +47,30 @@ npx github:ruby2js/juntos --demo notes my-notes  # Custom directory
 npx github:ruby2js/juntos --demo blog --no-install  # Skip npm install
 ```
 
+## Try Without Ruby
+
+Verify everything works with just Node.js using Docker:
+
+```bash
+docker run -it --rm -p 5173:5173 -p 3000:3000 node:22 bash -c '
+  cd /tmp &&
+  npx github:ruby2js/juntos --demo blog &&
+  cd blog &&
+  echo "Ready. Try: npx juntos dev -d dexie" &&
+  exec bash
+'
+```
+
+Then inside the container:
+
+```bash
+npx juntos test           # Run tests
+npx juntos dev -d dexie   # Dev server → http://localhost:5173
+npx juntos up -d sqlite   # Production → http://localhost:3000
+```
+
+No Ruby installed. Rails patterns just work.
+
 ## Documentation
 
 **https://www.ruby2js.com/docs/juntos**
