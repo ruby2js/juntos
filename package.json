@@ -1,0 +1,26 @@
+{
+  "name": "@ruby2js/juntos",
+  "version": "0.1.0",
+  "description": "Rails patterns, JavaScript runtimes",
+  "type": "module",
+  "bin": {
+    "juntos": "./cli.js"
+  },
+  "dependencies": {
+    "tar": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruby2js/juntos.git"
+  },
+  "homepage": "https://www.ruby2js.com/docs/juntos",
+  "keywords": [
+    "ruby",
+    "javascript",
+    "rails",
+    "transpiler",
+    "juntos"
+  ],
+  "author": "Sam Ruby",
+  "license": "MIT"
+}
