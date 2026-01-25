@@ -29,6 +29,22 @@ bin/rails db:prepare
 bin/rails server
 ```
 
+## Add to Existing Project
+
+Initialize Juntos in an existing project:
+
+```bash
+npx github:ruby2js/juntos init              # Current directory
+npx github:ruby2js/juntos init my-app       # Specific directory
+```
+
+This creates the configuration files needed for Juntos:
+- `package.json` (or merges dependencies into existing)
+- `vite.config.js`
+- `vitest.config.js`
+- `test/setup.mjs`
+- `bin/juntos`
+
 ## Available Demos
 
 | Demo | Description |
