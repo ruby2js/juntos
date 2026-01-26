@@ -10,17 +10,23 @@ Write Rails applications that run everywhere: browsers, Node.js, Bun, Deno, Clou
 npx github:ruby2js/juntos --demo blog
 cd blog
 npx juntos dev -d dexie
+npx juntos test
 ```
 
 That's it. Open http://localhost:5173 to see your app.
 
 ## Run Anywhere
 
-**Browser** (no Ruby required):
+**Juntos** (no Ruby required):
 ```bash
-npx juntos dev -d dexie      # IndexedDB, hot reload
+npx juntos dev -d dexie      # Browser with IndexedDB
 npx juntos up -d sqlite      # Node.js with SQLite
+npx juntos deploy -d neon    # Vercel Edge
+npx juntos deploy -d d1      # Cloudflare Workers
 ```
+
+Also deploys to mobile (Capacitor) and desktop (Electron, Tauri)—platforms Rails can't reach.
+See [Deployment Guide](https://www.ruby2js.com/docs/juntos/deploying).
 
 **Rails** (requires Ruby):
 ```bash
@@ -99,6 +105,8 @@ Juntos transpiles Ruby to JavaScript using [Ruby2JS](https://www.ruby2js.com/). 
 - **Controllers** → Request handlers with before_action, params, flash
 - **Views** → ERB templates become JavaScript render functions
 - **Routes** → Rails-style routing with path helpers
+
+No lock-in: `npx juntos eject` writes the transpiled JavaScript to disk. You can continue development in pure JavaScript without ever touching Ruby again.
 
 ## License
 
