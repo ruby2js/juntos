@@ -63,6 +63,7 @@ This creates the configuration files needed for Juntos:
 | `chat` | Real-time messaging with Turbo Streams |
 | `notes` | JSON API with React frontend |
 | `photo-gallery` | Device APIs and Electron support |
+| `dictaphone` | Audio recording with AI transcription and Active Storage |
 | `workflow` | React Flow integration |
 | `ssg-blog` | Static site generation with 11ty |
 | `astro-blog` | Content with client-side functionality |

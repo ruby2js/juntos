@@ -18,7 +18,7 @@ const RELEASES_URL = 'https://ruby2js.github.io/ruby2js/releases';
 const JUNTOS_CLI_URL = `${RELEASES_URL}/ruby2js-rails-beta.tgz`;
 
 // Available demos (match tarball names without demo- prefix and .tar.gz suffix)
-const DEMOS = ['blog', 'chat', 'notes', 'photo-gallery', 'workflow', 'ssg-blog', 'astro-blog'];
+const DEMOS = ['blog', 'chat', 'notes', 'photo-gallery', 'dictaphone', 'workflow', 'ssg-blog', 'astro-blog'];
 
 function showHelp() {
   console.log(`
@@ -55,6 +55,7 @@ function listDemos() {
     'chat': 'Real-time messaging with Turbo Streams',
     'notes': 'JSON API with React frontend',
     'photo-gallery': 'Device APIs and Electron support',
+    'dictaphone': 'Audio recording with AI transcription and Active Storage',
     'workflow': 'React Flow integration',
     'ssg-blog': 'Static site generation with 11ty',
     'astro-blog': 'Content with client-side functionality'
