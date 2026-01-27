@@ -51,6 +51,10 @@ This creates the configuration files needed for Juntos:
 - `test/setup.mjs`
 - `bin/juntos`
 
+## Live Demos
+
+[**Try them in your browser**](https://ruby2js.github.io/ruby2js/) — no install required.
+
 ## Available Demos
 
 | Demo | Description |
