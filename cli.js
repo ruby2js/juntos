@@ -148,7 +148,7 @@ async function installDemo(demoName, destination, options = {}) {
   // Run npm install unless --no-install was specified
   if (!options.skipInstall) {
     console.log('Installing dependencies...\n');
-    const result = spawnSync('npm', ['install'], {
+    const result = spawnSync('npm', ['install', '--prefer-online'], {
       cwd: destDir,
       stdio: 'inherit'
     });
@@ -361,7 +361,7 @@ exec npx juntos "$@"
   // Run npm install unless --no-install was specified
   if (!options.skipInstall) {
     console.log('\nInstalling dependencies...\n');
-    const result = spawnSync('npm', ['install'], {
+    const result = spawnSync('npm', ['install', '--prefer-online'], {
       cwd: destDir,
       stdio: 'inherit'
     });
