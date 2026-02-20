@@ -4,7 +4,7 @@
  * Juntos CLI Bootstrap
  *
  * Handles demo installation directly, delegates everything else
- * to the full CLI from ruby2js-rails.
+ * to the full CLI from juntos-dev.
  */
 
 import { spawnSync } from 'child_process';
@@ -15,7 +15,7 @@ import * as tar from 'tar';
 import { get } from 'https';
 
 const RELEASES_URL = 'https://ruby2js.github.io/ruby2js/releases';
-const JUNTOS_CLI_URL = `${RELEASES_URL}/ruby2js-rails-beta.tgz`;
+const JUNTOS_CLI_URL = `${RELEASES_URL}/juntos-dev-beta.tgz`;
 
 // Available demos (match tarball names without demo- prefix and .tar.gz suffix)
 const DEMOS = ['blog', 'chat', 'notes', 'photo-gallery', 'dictaphone', 'workflow', 'ssg-blog', 'astro-blog'];
@@ -213,12 +213,15 @@ async function initProject(destination, options = {}) {
     existing.devDependencies = existing.devDependencies || {};
     existing.scripts = existing.scripts || {};
 
-    // Add dependencies if missing (ruby2js and vite-plugin-ruby2js are peer deps of ruby2js-rails)
+    // Add dependencies if missing (ruby2js and vite-plugin-ruby2js are peer deps of juntos-dev)
     if (!existing.dependencies['ruby2js']) {
       existing.dependencies['ruby2js'] = `${RELEASES_URL}/ruby2js-beta.tgz`;
     }
-    if (!existing.dependencies['ruby2js-rails']) {
-      existing.dependencies['ruby2js-rails'] = `${RELEASES_URL}/ruby2js-rails-beta.tgz`;
+    if (!existing.dependencies['juntos']) {
+      existing.dependencies['juntos'] = `${RELEASES_URL}/juntos-beta.tgz`;
+    }
+    if (!existing.dependencies['juntos-dev']) {
+      existing.dependencies['juntos-dev'] = `${RELEASES_URL}/juntos-dev-beta.tgz`;
     }
     if (!existing.dependencies['vite-plugin-ruby2js']) {
       existing.dependencies['vite-plugin-ruby2js'] = `${RELEASES_URL}/vite-plugin-ruby2js-beta.tgz`;
@@ -251,7 +254,8 @@ async function initProject(destination, options = {}) {
       },
       dependencies: {
         'ruby2js': `${RELEASES_URL}/ruby2js-beta.tgz`,
-        'ruby2js-rails': `${RELEASES_URL}/ruby2js-rails-beta.tgz`,
+        'juntos': `${RELEASES_URL}/juntos-beta.tgz`,
+        'juntos-dev': `${RELEASES_URL}/juntos-dev-beta.tgz`,
         'vite-plugin-ruby2js': `${RELEASES_URL}/vite-plugin-ruby2js-beta.tgz`
       },
       devDependencies: {
@@ -267,7 +271,7 @@ async function initProject(destination, options = {}) {
   if (!existsSync(viteConfigPath)) {
     if (!options.quiet) console.log('  Creating vite.config.js...');
     writeFileSync(viteConfigPath, `import { defineConfig } from 'vite';
-import { juntos } from 'ruby2js-rails/vite';
+import { juntos } from 'juntos-dev/vite';
 
 export default defineConfig({
   plugins: juntos()
@@ -343,7 +347,7 @@ beforeEach(async () => {
     }
     writeFileSync(binstubPath, `#!/bin/sh
 # Juntos - Rails patterns, JavaScript runtimes
-# This binstub delegates to the juntos CLI from ruby2js-rails
+# This binstub delegates to the juntos CLI from juntos-dev
 exec npx juntos "$@"
 `);
     chmodSync(binstubPath, 0o755);
@@ -402,7 +406,7 @@ For more information: https://www.ruby2js.com/docs/juntos
 }
 
 async function delegateToFullCli(args) {
-  // Delegate to the full CLI from ruby2js-rails
+  // Delegate to the full CLI from juntos-dev
   const result = spawnSync('npx', [JUNTOS_CLI_URL, ...args], {
     stdio: 'inherit',
     env: process.env
