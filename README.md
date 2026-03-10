@@ -67,6 +67,7 @@ This creates the configuration files needed for Juntos:
 | `workflow` | React Flow integration |
 | `ssg-blog` | Static site generation with 11ty |
 | `astro-blog` | Content with client-side functionality |
+| `ballroom` | Juntos component showcase with 30+ controllers |
 
 ```bash
 npx github:ruby2js/juntos --demo chat

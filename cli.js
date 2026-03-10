@@ -18,7 +18,7 @@ const RELEASES_URL = 'https://ruby2js.github.io/ruby2js/releases';
 const JUNTOS_CLI_URL = `${RELEASES_URL}/juntos-dev-beta.tgz`;
 
 // Available demos (match tarball names without demo- prefix and .tar.gz suffix)
-const DEMOS = ['blog', 'chat', 'notes', 'photo-gallery', 'dictaphone', 'workflow', 'ssg-blog', 'astro-blog'];
+const DEMOS = ['blog', 'chat', 'notes', 'photo-gallery', 'dictaphone', 'workflow', 'ssg-blog', 'astro-blog', 'ballroom'];
 
 function showHelp() {
   console.log(`
@@ -58,7 +58,8 @@ function listDemos() {
     'dictaphone': 'Audio recording with AI transcription and Active Storage',
     'workflow': 'React Flow integration',
     'ssg-blog': 'Static site generation with 11ty',
-    'astro-blog': 'Content with client-side functionality'
+    'astro-blog': 'Content with client-side functionality',
+    'ballroom': 'Juntos component showcase with 30+ controllers'
   };
 
   for (const demo of DEMOS) {
