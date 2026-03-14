@@ -231,7 +231,7 @@ async function initProject(destination, options = {}) {
       existing.devDependencies['vite'] = '^7.0.0';
     }
     if (!existing.devDependencies['vitest']) {
-      existing.devDependencies['vitest'] = '^2.0.0';
+      existing.devDependencies['vitest'] = '^4.0.0';
     }
 
     // Add scripts if missing
@@ -261,7 +261,7 @@ async function initProject(destination, options = {}) {
       },
       devDependencies: {
         vite: '^7.0.0',
-        vitest: '^2.0.0'
+        vitest: '^4.0.0'
       }
     };
     writeFileSync(packagePath, JSON.stringify(pkg, null, 2) + '\n');
